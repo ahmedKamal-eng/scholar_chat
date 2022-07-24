@@ -1,4 +1,5 @@
 import 'package:chat_app/constant.dart';
+import 'package:chat_app/screens/chat_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -35,7 +36,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: 50,),
-                  Image.asset('assets/images/scholar.png'),
+                  Hero(
+                      tag: 'i',
+                      child: Image.asset('assets/images/scholar.png')),
                   Text(
                     'Scholar Chat',
                     style: TextStyle(
@@ -77,7 +80,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       if(formKey.currentState!.validate()){
                       try {
                         await register(email, pass);
-                        showSnackBar(context,'success', Colors.green.shade900);
+                        // showSnackBar(context,'success', Colors.green.shade900);
+                        Navigator.pushNamed(context, ChatPage.id,arguments: email);
                       }on FirebaseAuthException catch (e) {
                         if(e.code == 'weak-password')
                           {

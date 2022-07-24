@@ -6,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+import 'chat_screen.dart';
+
 class LoginPage extends StatefulWidget {
    LoginPage({Key? key}) : super(key: key);
   static String id = 'LoginPage';
@@ -40,9 +42,12 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 100,
                   ),
-                  Image.asset(
-                    'assets/images/scholar.png',
-                    height: 150,
+                  Hero(
+                    tag: 'i',
+                    child: Image.asset(
+                      'assets/images/scholar.png',
+                      height: 150,
+                    ),
                   ),
                   Text(
                     'Scholar Chat',
@@ -87,6 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                         var auth = await FirebaseAuth.instance
                             .signInWithEmailAndPassword(
                             email: email!, password: pass!);
+                        Navigator.pushNamed(context, ChatPage.id,arguments:email);
                         print(auth.user!.email);
                       }on FirebaseAuthException catch(e){
                         if(e.code == 'user-not-found'){
